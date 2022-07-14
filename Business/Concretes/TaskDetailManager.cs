@@ -1,23 +1,30 @@
 ﻿using Business.Abstracts;
+using DataAccess.Abstracts;
 using Entity.Concretes.Models;
 
 namespace Business.Concretes
 {
     public class TaskDetailManager : ITaskDetailService
     {
+        ITaskDetailDal _taskDetailDal;
+        public TaskDetailManager(ITaskDetailDal taskDetailDal)
+        {
+            _taskDetailDal = taskDetailDal;
+        }
+    
         public bool Add(TaskDetail taskDetail)
         {
-            throw new NotImplementedException();
+            return _taskDetailDal.Add(taskDetail);
         }
 
-        public bool Delete(int taskDetailId)
+        public bool Delete(int taskId)
         {
-            throw new NotImplementedException();
+            return _taskDetailDal.Delete(new TaskDetail { TaskId = taskId });
         }
 
-        public TaskDetail GetTaskDetail(int taskDetailId)
+        public TaskDetail GetTaskDetail(int taskId)
         {
-            throw new NotImplementedException();
+            return _taskDetailDal.Get(t => t.TaskId == taskId);
         }
 
         public bool Update(TaskDetail taskDetail)

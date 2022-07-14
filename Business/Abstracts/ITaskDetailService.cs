@@ -6,7 +6,7 @@ namespace Business.Abstracts
     {
         bool Add(TaskDetail taskDetail);
         bool Update(TaskDetail taskDetail);
-        bool Delete(int taskDetailId);
+        bool Delete(int taskId);
         TaskDetail GetTaskDetail(int taskDetailId);
     }
 }

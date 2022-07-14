@@ -13,7 +13,7 @@ namespace DataAccess.Abstracts
         T Get(Expression<Func<T, bool>> filter);
         List<T> GetAll(Expression<Func<T, bool>> filter = null);
         bool Add(T entity);
-        bool Delete(T entity);
+        bool Delete(T entityryId);
         bool Update(T entity);
     }
 }

@@ -5,5 +5,6 @@ namespace DataAccess.Concretes.EntityFrameworks
 {
     public class EfToDoDal : EfEntityRepositoryDal<ToDo, TaskManagementContext>, IToDoDal
     {
+
     }
 }

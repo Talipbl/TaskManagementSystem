@@ -8,7 +8,7 @@ namespace Business.Abstracts
         bool Add(Information ınformation);
         bool Update(Information ınformation);
         bool Delete(int informationId);
-        List<Information> GetInformations(Expression<Func<Information, bool>> filter);
+        List<Information> GetInformations();
         Information GetInformation(int informationId);
     }
 }

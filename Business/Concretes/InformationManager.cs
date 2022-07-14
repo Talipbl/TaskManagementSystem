@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using DataAccess.Abstracts;
 using Entity.Concretes.Models;
 using System.Linq.Expressions;
 
@@ -6,29 +7,35 @@ namespace Business.Concretes
 {
     public class InformationManager : IInformationService
     {
-        public bool Add(Information ınformation)
+        IInformationDal _informationDal;
+        public InformationManager(IInformationDal informationDal)
         {
-            throw new NotImplementedException();
+            _informationDal = informationDal;
+        }
+
+        public bool Add(Information information)
+        {
+            return _informationDal.Add(information);
         }
 
         public bool Delete(int informationId)
         {
-            throw new NotImplementedException();
+            return _informationDal.Delete(new Information { InfoId = informationId });
         }
 
         public Information GetInformation(int informationId)
         {
-            throw new NotImplementedException();
+            return _informationDal.Get(i => i.InfoId == informationId);
         }
 
-        public List<Information> GetInformations(Expression<Func<Information, bool>> filter)
+        public List<Information> GetInformations()
         {
-            throw new NotImplementedException();
+            return _informationDal.GetAll();
         }
 
-        public bool Update(Information ınformation)
+        public bool Update(Information information)
         {
-            throw new NotImplementedException();
+            return _informationDal.Update(information);
         }
     }
 }

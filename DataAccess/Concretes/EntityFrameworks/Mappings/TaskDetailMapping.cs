@@ -8,9 +8,7 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
     {
         public void Configure(EntityTypeBuilder<TaskDetail> entity)
         {
-            entity.HasKey(e => e.TaskDetailsId);
-
-            entity.Property(e => e.TaskDetailsId).HasColumnName("TaskDetailsID");
+            entity.HasKey(e => e.TaskId);
 
             entity.Property(e => e.CloseDate).HasColumnType("datetime");
 
@@ -27,12 +25,6 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
                 .HasForeignKey(d => d.FromId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TaskDetails_Users");
-
-            entity.HasOne(d => d.Task)
-                .WithMany(p => p.TaskDetails)
-                .HasForeignKey(d => d.TaskId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_TaskDetails_Tasks");
 
             entity.HasOne(d => d.UserTo)
                 .WithMany(p => p.TaskDetailTos)

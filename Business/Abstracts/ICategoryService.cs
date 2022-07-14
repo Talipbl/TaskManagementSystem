@@ -13,7 +13,7 @@ namespace Business.Abstracts
         bool Add(Category category);
         bool Update(Category category);
         bool Delete(int categoryId);
-        List<Category> GetCategories(Expression<Func<Category, bool>> filter);
+        List<Category> GetCategories();
         Category GetCategory(int categoryId);
     }
 }
