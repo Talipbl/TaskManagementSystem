@@ -26,6 +26,12 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Tasks_Categories");
+
+            entity.HasOne(d => d.User)
+                .WithMany(p => p.ToDos)
+                .HasForeignKey(d => d.ToId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Tasks_Users");
         }
     }
 }

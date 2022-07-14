@@ -1,4 +1,6 @@
 ﻿using Business.Abstracts;
+using DataAccess.Abstracts;
+using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
 using System.Linq.Expressions;
 
@@ -6,29 +8,35 @@ namespace Business.Concretes
 {
     public class ToDoManager : IToDoService
     {
+        IToDoDal _toDoDal;
+        public ToDoManager(IToDoDal toDoDal)
+        {
+            _toDoDal = toDoDal;
+        }
+
         public bool Add(ToDo toDo)
         {
-            throw new NotImplementedException();
+            return _toDoDal.Add(toDo);
         }
 
         public bool Delete(int todoId)
         {
-            throw new NotImplementedException();
+            return _toDoDal.Delete(new ToDo { TaskId = todoId });
         }
 
-        public List<ToDo> GetToDos(Expression<Func<ToDo, bool>> filter)
+        public List<ToDo> GetToDos()
         {
-            throw new NotImplementedException();
+            return _toDoDal.GetAll();
         }
 
-        public List<ToDo> GetTodosWithUserId(int userId)
+        public List<ListUserTaskDTO> GetTodosWithUserId(int userId)
         {
-            throw new NotImplementedException();
+            return _toDoDal.GetTodosWithUserId(userId);
         }
 
         public bool Update(ToDo toDo)
         {
-            throw new NotImplementedException();
+            return _toDoDal.Update(toDo);
         }
     }
 }

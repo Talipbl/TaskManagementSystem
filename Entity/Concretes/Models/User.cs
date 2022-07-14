@@ -12,6 +12,7 @@ namespace Entity.Concretes.Models
             InformationTos = new HashSet<Information>();
             TaskDetailFroms = new HashSet<TaskDetail>();
             TaskDetailTos = new HashSet<TaskDetail>();
+            ToDos = new HashSet<ToDo>();
         }
 
         public int UserId { get; set; }
@@ -21,6 +22,7 @@ namespace Entity.Concretes.Models
         public string? MailAdress { get; set; }
 
         public virtual Password Password { get; set; }
+        public virtual ICollection<ToDo> ToDos { get; set; }
         public virtual ICollection<Information> InformationFroms { get; set; }
         public virtual ICollection<Information> InformationTos { get; set; }
         public virtual ICollection<TaskDetail> TaskDetailFroms { get; set; }

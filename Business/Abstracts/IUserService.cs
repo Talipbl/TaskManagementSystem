@@ -8,7 +8,7 @@ namespace Business.Abstracts
         bool Add(User user);
         bool Update(User user);
         bool Delete(int userId);
-        List<User> GetUsers(Expression<Func<ToDo, bool>> filter);
+        List<User> GetUsers();
         User GetUser(int userId);
         User GetUserByMail(string userMailAddress);
     }

@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using DataAccess.Abstracts;
 using Entity.Concretes.Models;
 using System.Linq.Expressions;
 
@@ -6,34 +7,40 @@ namespace Business.Concretes
 {
     public class UserManager : IUserService
     {
+        IUserDal _userDal;
+        public UserManager(IUserDal userDal)
+        {
+            _userDal = userDal;
+        }
+
         public bool Add(User user)
         {
-            throw new NotImplementedException();
+            return _userDal.Add(user);
         }
 
         public bool Delete(int userId)
         {
-            throw new NotImplementedException();
+            return _userDal.Delete(new User { UserId = userId });
         }
 
         public User GetUser(int userId)
         {
-            throw new NotImplementedException();
+            return _userDal.Get(u => u.UserId == userId);
         }
 
         public User GetUserByMail(string userMailAddress)
         {
-            throw new NotImplementedException();
+            return _userDal.Get(u => u.MailAdress == userMailAddress);
         }
 
-        public List<User> GetUsers(Expression<Func<ToDo, bool>> filter)
+        public List<User> GetUsers()
         {
-            throw new NotImplementedException();
+            return _userDal.GetAll();
         }
 
         public bool Update(User user)
         {
-            throw new NotImplementedException();
+            return _userDal.Update(user);
         }
     }
 }

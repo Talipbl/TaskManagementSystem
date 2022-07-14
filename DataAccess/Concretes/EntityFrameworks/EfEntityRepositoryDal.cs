@@ -26,7 +26,6 @@ namespace DataAccess.Concretes.EntityFrameworks
             }
             return false;
         }
-
         public bool Delete(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -39,7 +38,6 @@ namespace DataAccess.Concretes.EntityFrameworks
             }
             return false;
         }
-
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
@@ -47,7 +45,6 @@ namespace DataAccess.Concretes.EntityFrameworks
                 return context.Set<TEntity>().FirstOrDefault(filter);
             }
         }
-
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using (TContext context = new TContext())
@@ -55,7 +52,6 @@ namespace DataAccess.Concretes.EntityFrameworks
                 return filter == null ? context.Set<TEntity>().ToList() : context.Set<TEntity>().Where(filter).ToList();
             }
         }
-
         public bool Update(TEntity entity)
         {
             using (TContext context = new TContext())

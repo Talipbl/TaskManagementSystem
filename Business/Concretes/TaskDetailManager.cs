@@ -29,7 +29,7 @@ namespace Business.Concretes
 
         public bool Update(TaskDetail taskDetail)
         {
-            throw new NotImplementedException();
+            return _taskDetailDal.Update(taskDetail);
         }
     }
 }
