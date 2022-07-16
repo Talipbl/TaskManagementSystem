@@ -33,5 +33,14 @@ namespace WebAPI.Controllers
             }
             return Unauthorized("Doğrulama Başarısız");
         }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserRegisterDTO userRegister)
+        {
+            if (_authenticationService.Register(userRegister))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }
