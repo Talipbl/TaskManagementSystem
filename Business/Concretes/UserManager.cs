@@ -19,12 +19,7 @@ namespace Business.Concretes
 
         public bool Add(User user)
         {
-            var checkUser = _userDal.Get(u => u.MailAdress == user.MailAdress);
-            if (checkUser == null)
-            {
-                return _userDal.Add(user);
-            }
-            return false;
+            return _userDal.Add(user);
         }
 
         public bool Delete(int userId)

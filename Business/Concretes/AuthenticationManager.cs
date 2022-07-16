@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Business.Helpers;
 using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
 using System;
@@ -14,42 +15,47 @@ namespace Business.Concretes
     {
         IUserService _userService;
         IPasswordService _passwordService;
-
         public AuthenticationManager(IUserService userService, IPasswordService passwordService)
         {
             _userService = userService;
             _passwordService = passwordService;
         }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
         public bool Register(UserRegisterDTO userRegister)
         {
-            byte[] passwordSalt, passwordHash;
-            CreatePasswordHash(userRegister.Password, out passwordHash, out passwordSalt);
-            User user = new User()
+            var checkUser = _userService.GetUserByMail(userRegister.MailAdress);
+            if (checkUser == null)
             {
-                FirstName = userRegister.FirstName,
-                LastName = userRegister.LastName,
-                MailAdress = userRegister.MailAdress,
-                PhoneNumber = userRegister.PhoneNumber
-            };
-            if (_userService.Add(user))
-            {
-                var userId = _userService.GetUserByMail(userRegister.MailAdress).UserId;
-                Password password = new Password()
+                byte[] passwordSalt, passwordHash;
+                HashingHelper.CreatePasswordHash(userRegister.Password, out passwordHash, out passwordSalt);
+                User user = new User()
                 {
-                    UserId = userId,
-                    PasswordSalt = passwordSalt,
-                    PasswordHash = passwordHash
+                    FirstName = userRegister.FirstName,
+                    LastName = userRegister.LastName,
+                    MailAdress = userRegister.MailAdress,
+                    PhoneNumber = userRegister.PhoneNumber
                 };
-                return _passwordService.Add(password);
+                if (_userService.Add(user))
+                {
+                    var userId = _userService.GetUserByMail(userRegister.MailAdress).UserId;
+                    Password password = new Password()
+                    {
+                        UserId = userId,
+                        PasswordSalt = passwordSalt,
+                        PasswordHash = passwordHash
+                    };
+                    return _passwordService.Add(password);
+                }
+            }
+            return false;
+        }
+
+        public bool Login(UserLoginDTO userLogin)
+        {
+            var user = _userService.GetUserByMail(userLogin.EMail);
+            if (user != null)
+            {
+                var password = _passwordService.GetPassword(user.UserId);
+                return HashingHelper.VerifyPasswordHash(userLogin.Password, password.PasswordHash, password.PasswordSalt);
             }
             return false;
         }

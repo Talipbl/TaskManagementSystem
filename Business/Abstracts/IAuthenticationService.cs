@@ -10,6 +10,6 @@ namespace Business.Abstracts
     public interface IAuthenticationService
     {
         bool Register(UserRegisterDTO userRegister);
-
+        bool Login(UserLoginDTO userLogin);
     }
 }

@@ -14,6 +14,29 @@ namespace ConsoleTestUI
             Console.WriteLine("Hello World!");
             //GetCategories();
             //RegisterUser();
+            //LoginUser();
+
+        }
+
+        private static void LoginUser()
+        {
+            IUserService userService = new UserManager(new EfUserDal());
+            IAuthenticationService authenticationService = new AuthenticationManager(
+                userService, new PasswordManager(new EfPasswordDal()));
+
+            UserLoginDTO user = new UserLoginDTO()
+            {
+                EMail = "talip@talip.com",
+                Password = "ebegümeci"
+            };
+            if (authenticationService.Login(user))
+            {
+                Console.WriteLine("Giriş Başarılı");
+            }
+            else
+            {
+                Console.WriteLine("Giriş Başarısız");
+            }
         }
 
         private static void GetCategories()
