@@ -7,5 +7,6 @@ namespace DataAccess.Abstracts
     public interface IToDoDal : IEntityRepositoryDal<ToDo>
     {
         List<ListUserTaskDTO> GetTodosWithUserId(int userId);
+        ToDo GetLastToDo();
     }
 }

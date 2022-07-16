@@ -3,6 +3,8 @@ using Business.Concretes;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFrameworks;
 using Entity.Concretes.DTO;
+using Entity.Concretes.Models;
+using Services.Security.JWT;
 using System;
 
 namespace ConsoleTestUI
@@ -16,28 +18,38 @@ namespace ConsoleTestUI
             //RegisterUser();
             //LoginUser();
 
-        }
-
-        private static void LoginUser()
-        {
-            IUserService userService = new UserManager(new EfUserDal());
-            IAuthenticationService authenticationService = new AuthenticationManager(
-                userService, new PasswordManager(new EfPasswordDal()));
-
-            UserLoginDTO user = new UserLoginDTO()
+            ToDo toDo = new ToDo()
             {
-                EMail = "talip@talip.com",
-                Password = "ebegümeci"
+                CategoryId = 1,
+                Subject = "Mail servisi çalışmıyor",
+                Description = "kullanıcı mail servsinden mail alamıyor",
+                ToId = 1001
             };
-            if (authenticationService.Login(user))
-            {
-                Console.WriteLine("Giriş Başarılı");
-            }
-            else
-            {
-                Console.WriteLine("Giriş Başarısız");
-            }
+            IToDoService toDoService = new ToDoManager(new EfToDoDal(), new TaskDetailManager(new EfTaskDetailDal()));
+            toDoService.Add(toDo, 1000);
+            
         }
+
+        //private static void LoginUser()
+        //{
+        //    IUserService userService = new UserManager(new EfUserDal());
+        //    IAuthenticationService authenticationService = new AuthenticationManager(
+        //        userService, new PasswordManager(new EfPasswordDal()), new AccessTokenService());
+
+        //    UserLoginDTO user = new UserLoginDTO()
+        //    {
+        //        EMail = "talip@talip.com",
+        //        Password = "ebegümeci"
+        //    };
+        //    if (authenticationService.Login(user))
+        //    {
+        //        Console.WriteLine("Giriş Başarılı");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Giriş Başarısız");
+        //    }
+        //}
 
         private static void GetCategories()
         {

@@ -16,31 +16,15 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
                             .HasMaxLength(10)
                             .IsFixedLength();
 
-            entity.Property(e => e.FromId).HasColumnName("FromID");
-
             entity.Property(e => e.SendDate).HasColumnType("datetime");
 
             entity.Property(e => e.TaskId).HasColumnName("TaskID");
-
-            entity.Property(e => e.ToId).HasColumnName("ToID");
-
-            entity.HasOne(d => d.UserFrom)
-                            .WithMany(p => p.InformationFroms)
-                            .HasForeignKey(d => d.FromId)
-                            .OnDelete(DeleteBehavior.ClientSetNull)
-                            .HasConstraintName("FK_Informations_Users");
 
             entity.HasOne(d => d.Task)
                             .WithMany(p => p.Informations)
                             .HasForeignKey(d => d.TaskId)
                             .OnDelete(DeleteBehavior.ClientSetNull)
                             .HasConstraintName("FK_Informations_Tasks");
-
-            entity.HasOne(d => d.UserTo)
-                            .WithMany(p => p.InformationTos)
-                            .HasForeignKey(d => d.ToId)
-                            .OnDelete(DeleteBehavior.ClientSetNull)
-                            .HasConstraintName("FK_Informations_Users1");
         }
     }
 }

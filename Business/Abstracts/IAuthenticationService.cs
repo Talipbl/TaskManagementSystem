@@ -1,4 +1,6 @@
 ﻿using Entity.Concretes.DTO;
+using Entity.Concretes.Models;
+using Services.Security.JWT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +13,6 @@ namespace Business.Abstracts
     {
         bool Register(UserRegisterDTO userRegister);
         bool Login(UserLoginDTO userLogin);
+        AccessToken CreateAccessToken(User user);
     }
 }

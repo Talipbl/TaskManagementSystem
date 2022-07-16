@@ -17,6 +17,8 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
 
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
 
+            entity.Property(e => e.ToId).HasColumnName("ToID");
+
             entity.Property(e => e.Description).HasMaxLength(500);
 
             entity.Property(e => e.Subject).HasMaxLength(50);

@@ -2,6 +2,7 @@
 using Business.Helpers;
 using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
+using Services.Security.JWT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,12 @@ namespace Business.Concretes
     {
         IUserService _userService;
         IPasswordService _passwordService;
-        public AuthenticationManager(IUserService userService, IPasswordService passwordService)
+        IAccessTokenService _accessTokenService;
+        public AuthenticationManager(IUserService userService, IPasswordService passwordService,IAccessTokenService accessTokenService)
         {
             _userService = userService;
             _passwordService = passwordService;
+            _accessTokenService = accessTokenService;
         }
         public bool Register(UserRegisterDTO userRegister)
         {
@@ -58,6 +61,11 @@ namespace Business.Concretes
                 return HashingHelper.VerifyPasswordHash(userLogin.Password, password.PasswordHash, password.PasswordSalt);
             }
             return false;
+        }
+
+        public AccessToken CreateAccessToken(User user)
+        {
+            return _accessTokenService.CreateAccessToken(user);
         }
     }
 }

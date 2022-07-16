@@ -3,6 +3,7 @@ using Business.Abstracts;
 using Business.Concretes;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFrameworks;
+using Services.Security.JWT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,10 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+
+            builder.RegisterType<AuthenticationManager>().As<IAuthenticationService>().SingleInstance();
+
+            builder.RegisterType<AccessTokenService>().As<IAccessTokenService>().SingleInstance();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Business.Abstracts
 {
     public interface IToDoService
     {
-        bool Add(ToDo toDo);
+        bool Add(ToDo toDo, int fromId);
         bool Update(ToDo toDo);
         bool Delete(int todoId);
         List<ToDo> GetToDos();

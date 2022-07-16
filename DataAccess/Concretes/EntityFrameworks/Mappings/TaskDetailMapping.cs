@@ -20,8 +20,6 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
 
             entity.Property(e => e.TaskId).HasColumnName("TaskID");
 
-            entity.Property(e => e.ToId).HasColumnName("ToID");
-
             entity.HasOne(d => d.ToDo)
                 .WithMany(p => p.TaskDetails)
                 .HasForeignKey(d => d.TaskId)
@@ -29,17 +27,11 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
                 .HasConstraintName("FK_TaskDetails_Tasks");
 
 
-            entity.HasOne(d => d.UserFrom)
+            entity.HasOne(d => d.User)
                 .WithMany(p => p.TaskDetailFroms)
                 .HasForeignKey(d => d.FromId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TaskDetails_Users");
-
-            entity.HasOne(d => d.UserTo)
-                .WithMany(p => p.TaskDetailTos)
-                .HasForeignKey(d => d.ToId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_TaskDetails_Users1");
         }
     }
 }

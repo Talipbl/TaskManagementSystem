@@ -6,6 +6,14 @@ namespace DataAccess.Concretes.EntityFrameworks
 {
     public class EfToDoDal : EfEntityRepositoryDal<ToDo, TaskManagementContext>, IToDoDal
     {
+        public ToDo GetLastToDo()
+        {
+            using (TaskManagementContext context = new TaskManagementContext())
+            {
+                return context.Set<ToDo>().Take(1).OrderByDescending(x => x.TaskId).First();
+            }
+        }
+
         public List<ListUserTaskDTO> GetTodosWithUserId(int userId)
         {
             using (TaskManagementContext context = new TaskManagementContext())
