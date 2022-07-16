@@ -6,11 +6,11 @@ namespace Entity.Concretes.Models
 {
     public class ToDo : IEntity
     {
-        public ToDo()
-        {
-            Informations = new HashSet<Information>();
-            TaskDetails = new TaskDetail();
-        }
+        //public ToDo()
+        //{
+        //    Informations = new HashSet<Information>();
+        //    TaskDetails = new TaskDetail();
+        //}
 
         public int TaskId { get; set; }
         public int CategoryId { get; set; }
@@ -21,6 +21,6 @@ namespace Entity.Concretes.Models
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Information> Informations { get; set; }
-        public virtual TaskDetail TaskDetails { get; set; }
+        public virtual List<TaskDetail> TaskDetails { get; set; }
     }
 }

@@ -6,6 +6,7 @@ namespace Entity.Concretes.Models
 {
     public class TaskDetail : IEntity
     {
+        public int TaskDetailID { get; set; }
         public int TaskId { get; set; }
         public int FromId { get; set; }
         public int ToId { get; set; }

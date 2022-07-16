@@ -6,14 +6,14 @@ namespace Entity.Concretes.Models
 {
     public class User : IEntity
     {
-        public User()
-        {
-            InformationFroms = new HashSet<Information>();
-            InformationTos = new HashSet<Information>();
-            TaskDetailFroms = new HashSet<TaskDetail>();
-            TaskDetailTos = new HashSet<TaskDetail>();
-            ToDos = new HashSet<ToDo>();
-        }
+        //public User()
+        //{
+        //    InformationFroms = new HashSet<Information>();
+        //    InformationTos = new HashSet<Information>();
+        //    TaskDetailFroms = new HashSet<TaskDetail>();
+        //    TaskDetailTos = new HashSet<TaskDetail>();
+        //    ToDos = new HashSet<ToDo>();
+        //}
 
         public int UserId { get; set; }
         public string FirstName { get; set; }

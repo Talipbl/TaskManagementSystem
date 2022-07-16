@@ -8,7 +8,9 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
     {
         public void Configure(EntityTypeBuilder<TaskDetail> entity)
         {
-            entity.HasKey(e => e.TaskId);
+            entity.HasKey(e => e.TaskDetailID);
+
+            entity.Property(e => e.TaskDetailID).HasColumnName("TaskDetailID");
 
             entity.Property(e => e.CloseDate).HasColumnType("datetime");
 
@@ -19,6 +21,13 @@ namespace DataAccess.Concretes.EntityFrameworks.Mappings
             entity.Property(e => e.TaskId).HasColumnName("TaskID");
 
             entity.Property(e => e.ToId).HasColumnName("ToID");
+
+            entity.HasOne(d => d.ToDo)
+                .WithMany(p => p.TaskDetails)
+                .HasForeignKey(d => d.TaskId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TaskDetails_Tasks");
+
 
             entity.HasOne(d => d.UserFrom)
                 .WithMany(p => p.TaskDetailFroms)

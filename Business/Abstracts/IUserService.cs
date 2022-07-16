@@ -1,4 +1,5 @@
-﻿using Entity.Concretes.Models;
+﻿using Entity.Concretes.DTO;
+using Entity.Concretes.Models;
 using System.Linq.Expressions;
 
 namespace Business.Abstracts

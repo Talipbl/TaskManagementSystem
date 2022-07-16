@@ -6,10 +6,10 @@ namespace Entity.Concretes.Models
 {
     public class Category : IEntity
     {
-        public Category()
-        {
-            ToDos = new HashSet<ToDo>();
-        }
+        //public Category()
+        //{
+        //    ToDos = new HashSet<ToDo>();
+        //}
 
         public int CategoryId { get; set; }
         public string Name { get; set; }
