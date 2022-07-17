@@ -49,7 +49,7 @@ namespace Business.Concretes
                         PasswordSalt = passwordSalt,
                         PasswordHash = passwordHash
                     };
-                    if (_passwordService.Add(password))
+                    if (_passwordService.Add(password).Success)
                     {
                         return new SuccessResult(MessageHelper.CreateMessage(Messages.User, Messages.SuccessfullyCreated));
                     }
@@ -65,7 +65,7 @@ namespace Business.Concretes
             if (user != null)
             {
                 var password = _passwordService.GetPassword(user.UserId);
-                return HashingHelper.VerifyPasswordHash(userLogin.Password, password.PasswordHash, password.PasswordSalt);
+                return HashingHelper.VerifyPasswordHash(userLogin.Password, password.Data.PasswordHash, password.Data.PasswordSalt);
             }
             return new ErrorResult(MessageHelper.CreateMessage(Messages.UserName,Messages.Incorrect));
         }

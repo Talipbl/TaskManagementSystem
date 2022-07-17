@@ -1,6 +1,9 @@
 ﻿using Business.Abstracts;
 using DataAccess.Abstracts;
 using Entity.Concretes.Models;
+using Services.Constants;
+using Services.Result;
+using Services.Result.Abstracts;
 
 namespace Business.Concretes
 {
@@ -12,24 +15,36 @@ namespace Business.Concretes
             _passwordDal = passwordDal;
         }
 
-        public bool Add(Password password)
+        public IResult Add(Password password)
         {
-            return _passwordDal.Add(password);
+            if(_passwordDal.Add(password))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Password, Messages.Added));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Password, Messages.InsertError));
         }
 
-        public bool Delete(int userId)
+        public IResult Delete(int userId)
         {
-            return _passwordDal.Delete(new Password { UserId = userId });
+            if (_passwordDal.Delete(new Password { UserId = userId }))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Password, Messages.Deleted));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Password, Messages.DeletionError));
         }
 
-        public Password GetPassword(int userId)
+        public IDataResult<Password> GetPassword(int userId)
         {
-            return _passwordDal.Get(u=>u.UserId == userId);
+            return new SuccessDataResult<Password>(_passwordDal.Get(u=>u.UserId == userId));
         }
 
-        public bool Update(Password password)
+        public IResult Update(Password password)
         {
-            return _passwordDal.Update(password);   
+            if (_passwordDal.Update(password))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Password, Messages.Updated));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Password, Messages.UpdateError));
         }
     }
 }

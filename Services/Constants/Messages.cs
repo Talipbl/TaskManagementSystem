@@ -26,5 +26,6 @@ namespace Services.Constants
         public static string DeletionError = " {0} silinemedi";
         public static string Updated = " {0} güncellendi";
         public static string UpdateError = " {0} güncellenemedi";
+        public static string Information;
     }
 }

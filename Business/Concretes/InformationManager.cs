@@ -1,6 +1,9 @@
 ﻿using Business.Abstracts;
 using DataAccess.Abstracts;
 using Entity.Concretes.Models;
+using Services.Constants;
+using Services.Result;
+using Services.Result.Abstracts;
 using System.Linq.Expressions;
 
 namespace Business.Concretes
@@ -13,29 +16,41 @@ namespace Business.Concretes
             _informationDal = informationDal;
         }
 
-        public bool Add(Information information)
+        public IResult Add(Information information)
         {
-            return _informationDal.Add(information);
+            if (_informationDal.Add(information))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Information, Messages.Added));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Information, Messages.InsertError));
         }
 
-        public bool Delete(int informationId)
+        public IResult Delete(int informationId)
         {
-            return _informationDal.Delete(new Information { InfoId = informationId });
+            if (_informationDal.Delete(new Information { InfoId = informationId }))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Information, Messages.Deleted));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Information, Messages.DeletionError));
         }
 
-        public Information GetInformation(int informationId)
+        public IDataResult<Information> GetInformation(int informationId)
         {
-            return _informationDal.Get(i => i.InfoId == informationId);
+            return new SuccessDataResult<Information>(_informationDal.Get(i => i.InfoId == informationId));
         }
 
-        public List<Information> GetInformations()
+        public IDataResult<List<Information>> GetInformations()
         {
-            return _informationDal.GetAll();
+            return new SuccessDataResult<List<Information>>(_informationDal.GetAll());
         }
 
-        public bool Update(Information information)
+        public IResult Update(Information information)
         {
-            return _informationDal.Update(information);
+            if (_informationDal.Update(information))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Information, Messages.Updated));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Information, Messages.UpdateError));
         }
     }
 }

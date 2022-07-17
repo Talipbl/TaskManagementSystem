@@ -1,14 +1,14 @@
 ﻿using Entity.Concretes.Models;
-using System.Linq.Expressions;
+using Services.Result.Abstracts;
 
 namespace Business.Abstracts
 {
     public interface IInformationService
     {
-        bool Add(Information ınformation);
-        bool Update(Information ınformation);
-        bool Delete(int informationId);
-        List<Information> GetInformations();
-        Information GetInformation(int informationId);
+        IResult Add(Information ınformation);
+        IResult Update(Information ınformation);
+        IResult Delete(int informationId);
+        IDataResult<List<Information>> GetInformations();
+        IDataResult<Information> GetInformation(int informationId);
     }
 }
