@@ -1,4 +1,5 @@
 ﻿using Entity.Concretes.Models;
+using Services.Result.Abstracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Business.Abstracts
 {
     public interface ICategoryService
     {
-        bool Add(Category category);
-        bool Update(Category category);
-        bool Delete(int categoryId);
-        List<Category> GetCategories();
-        Category GetCategory(int categoryId);
+        IResult Add(Category category);
+        IResult Update(Category category);
+        IResult Delete(int categoryId);
+        IDataResult<List<Category>> GetCategories();
+        IDataResult<Category> GetCategory(int categoryId);
     }
 }

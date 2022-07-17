@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Services.Constants;
+using Services.Result;
+using Services.Result.Abstracts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Helpers
+namespace Services.Security.Helpers
 {
     public class HashingHelper
     {
@@ -17,7 +19,7 @@ namespace Business.Helpers
                 passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
-        public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        public static IResult VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512(passwordSalt))
             {
@@ -26,10 +28,10 @@ namespace Business.Helpers
                 {
                     if (computedHash[i] != passwordHash[i])
                     {
-                        return false;
+                        return new ErrorResult(MessageHelper.CreateMessage(Messages.Password,Messages.Incorrect));
                     }
                 }
-                return true;
+                return new SuccessResult();
             }
         }
     }

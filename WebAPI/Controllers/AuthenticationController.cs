@@ -2,6 +2,7 @@
 using Entity.Concretes.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.Constants;
 using Services.Security.JWT;
 
 namespace WebAPI.Controllers
@@ -22,7 +23,8 @@ namespace WebAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginDTO userLogin)
         {
-            if (_authenticationService.Login(userLogin))
+            var result = _authenticationService.Login(userLogin);
+            if (result.Success)
             {
                 var loginUser = _userService.GetUserByMail(userLogin.EMail);
                 var accessToken = _authenticationService.CreateAccessToken(loginUser);
@@ -31,12 +33,12 @@ namespace WebAPI.Controllers
                     return Ok(accessToken);
                 }
             }
-            return Unauthorized("Doğrulama Başarısız");
+            return Unauthorized(result.Message);
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDTO userRegister)
         {
-            if (_authenticationService.Register(userRegister))
+            if (_authenticationService.Register(userRegister).Success)
             {
                 return Ok();
             }

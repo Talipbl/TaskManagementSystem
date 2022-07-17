@@ -1,5 +1,6 @@
 ﻿using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
+using Services.Result.Abstracts;
 using Services.Security.JWT;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace Business.Abstracts
 {
     public interface IAuthenticationService
     {
-        bool Register(UserRegisterDTO userRegister);
-        bool Login(UserLoginDTO userLogin);
-        AccessToken CreateAccessToken(User user);
+        IResult Register(UserRegisterDTO userRegister);
+        IResult Login(UserLoginDTO userLogin);
+        IDataResult<AccessToken> CreateAccessToken(User user);
     }
 }

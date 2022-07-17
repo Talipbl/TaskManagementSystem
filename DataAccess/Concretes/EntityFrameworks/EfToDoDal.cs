@@ -1,20 +1,22 @@
 ﻿using DataAccess.Abstracts;
 using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
+using Services.Result;
+using Services.Result.Abstracts;
 
 namespace DataAccess.Concretes.EntityFrameworks
 {
     public class EfToDoDal : EfEntityRepositoryDal<ToDo, TaskManagementContext>, IToDoDal
     {
-        public ToDo GetLastToDo()
+        public IDataResult<ToDo> GetLastToDo()
         {
             using (TaskManagementContext context = new TaskManagementContext())
             {
-                return context.Set<ToDo>().Take(1).OrderByDescending(x => x.TaskId).First();
+                return new SuccessDataResult<ToDo>(context.Set<ToDo>().Take(1).OrderByDescending(x => x.TaskId).First());
             }
         }
 
-        public List<ListUserTaskDTO> GetTodosWithUserId(int userId)
+        public IDataResult<List<ListUserTaskDTO>> GetTodosWithUserId(int userId)
         {
             using (TaskManagementContext context = new TaskManagementContext())
             {
@@ -32,7 +34,7 @@ namespace DataAccess.Concretes.EntityFrameworks
                                  FirstName = u.FirstName,
                                  LastName = u.LastName
                              };
-                return result.ToList();
+                return new SuccessDataResult<List<ListUserTaskDTO>>(result.ToList());
             }
         }
     }

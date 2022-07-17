@@ -20,7 +20,7 @@ namespace Business.Concretes
         {
             if (_toDoDal.Add(toDo))
             {
-                var lastToDo = _toDoDal.GetLastToDo();
+                var lastToDo = _toDoDal.GetLastToDo().Data;
                 TaskDetail taskDetail = new TaskDetail()
                 {
                     TaskId = lastToDo.TaskId,
@@ -45,7 +45,7 @@ namespace Business.Concretes
 
         public List<ListUserTaskDTO> GetTodosWithUserId(int userId)
         {
-            return _toDoDal.GetTodosWithUserId(userId);
+            return _toDoDal.GetTodosWithUserId(userId).Data;
         }
 
         public bool Update(ToDo toDo)

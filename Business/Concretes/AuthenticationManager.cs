@@ -1,5 +1,5 @@
 ﻿using Business.Abstracts;
-using Business.Helpers;
+using Services.Security.Helpers;
 using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
 using Services.Security.JWT;
@@ -9,6 +9,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Services.Result.Abstracts;
+using Services.Result;
+using Services.Constants;
 
 namespace Business.Concretes
 {
@@ -17,13 +20,13 @@ namespace Business.Concretes
         IUserService _userService;
         IPasswordService _passwordService;
         IAccessTokenService _accessTokenService;
-        public AuthenticationManager(IUserService userService, IPasswordService passwordService,IAccessTokenService accessTokenService)
+        public AuthenticationManager(IUserService userService, IPasswordService passwordService, IAccessTokenService accessTokenService)
         {
             _userService = userService;
             _passwordService = passwordService;
             _accessTokenService = accessTokenService;
         }
-        public bool Register(UserRegisterDTO userRegister)
+        public IResult Register(UserRegisterDTO userRegister)
         {
             var checkUser = _userService.GetUserByMail(userRegister.MailAdress);
             if (checkUser == null)
@@ -46,13 +49,17 @@ namespace Business.Concretes
                         PasswordSalt = passwordSalt,
                         PasswordHash = passwordHash
                     };
-                    return _passwordService.Add(password);
+                    if (_passwordService.Add(password))
+                    {
+                        return new SuccessResult(MessageHelper.CreateMessage(Messages.User, Messages.SuccessfullyCreated));
+                    }
                 }
+                return new ErrorResult(MessageHelper.CreateMessage(Messages.User, Messages.InsertError));
             }
-            return false;
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.User,Messages.AlreadyExists));
         }
 
-        public bool Login(UserLoginDTO userLogin)
+        public IResult Login(UserLoginDTO userLogin)
         {
             var user = _userService.GetUserByMail(userLogin.EMail);
             if (user != null)
@@ -60,12 +67,13 @@ namespace Business.Concretes
                 var password = _passwordService.GetPassword(user.UserId);
                 return HashingHelper.VerifyPasswordHash(userLogin.Password, password.PasswordHash, password.PasswordSalt);
             }
-            return false;
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.UserName,Messages.Incorrect));
         }
 
-        public AccessToken CreateAccessToken(User user)
+        public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            return _accessTokenService.CreateAccessToken(user);
+            return new SuccessDataResult<AccessToken>(_accessTokenService.CreateAccessToken(user),MessageHelper.CreateMessage(
+                Messages.AccessToken, Messages.SuccessfullyCreated));
         }
     }
 }

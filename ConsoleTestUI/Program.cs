@@ -14,19 +14,24 @@ namespace ConsoleTestUI
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            string message = "{} eklendi";
+            Console.WriteLine(String.Format(message,"Ürün"));
+
+
             //GetCategories();
             //RegisterUser();
             //LoginUser();
 
-            ToDo toDo = new ToDo()
-            {
-                CategoryId = 1,
-                Subject = "Mail servisi çalışmıyor",
-                Description = "kullanıcı mail servsinden mail alamıyor",
-                ToId = 1001
-            };
-            IToDoService toDoService = new ToDoManager(new EfToDoDal(), new TaskDetailManager(new EfTaskDetailDal()));
-            toDoService.Add(toDo, 1000);
+            //ToDo toDo = new ToDo()
+            //{
+            //    CategoryId = 1,
+            //    Subject = "Mail servisi çalışmıyor",
+            //    Description = "kullanıcı mail servsinden mail alamıyor",
+            //    ToId = 1001
+            //};
+            //IToDoService toDoService = new ToDoManager(new EfToDoDal(), new TaskDetailManager(new EfTaskDetailDal()));
+            //toDoService.Add(toDo, 1000);
             
         }
 
@@ -61,20 +66,20 @@ namespace ConsoleTestUI
             }
         }
 
-        private static void RegisterUser()
-        {
-            IUserService userService = new UserManager(new EfUserDal());
-            IAuthenticationService authenticationService = new AuthenticationManager(
-                userService, new PasswordManager(new EfPasswordDal()));
-            UserRegisterDTO user = new UserRegisterDTO()
-            {
-                FirstName = "Ali",
-                LastName = "KORUKCU",
-                MailAdress = "ali@ali.com",
-                PhoneNumber = "+90132456",
-                Password = "sıddık"//ebegümeci
-            };
-            authenticationService.Register(user);
-        }
+        //private static void RegisterUser()
+        //{
+        //    IUserService userService = new UserManager(new EfUserDal());
+        //    IAuthenticationService authenticationService = new AuthenticationManager(
+        //        userService, new PasswordManager(new EfPasswordDal()));
+        //    UserRegisterDTO user = new UserRegisterDTO()
+        //    {
+        //        FirstName = "Ali",
+        //        LastName = "KORUKCU",
+        //        MailAdress = "ali@ali.com",
+        //        PhoneNumber = "+90132456",
+        //        Password = "sıddık"//ebegümeci
+        //    };
+        //    authenticationService.Register(user);
+        //}
     }
 }
