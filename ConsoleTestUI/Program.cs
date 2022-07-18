@@ -60,7 +60,7 @@ namespace ConsoleTestUI
         {
             ICategoryService categoryService = new CategoryManager(new EfCategoryDal());
             var result = categoryService.GetCategories();
-            foreach (var category in result)
+            foreach (var category in result.Data)
             {
                 Console.WriteLine(category.Name);
             }

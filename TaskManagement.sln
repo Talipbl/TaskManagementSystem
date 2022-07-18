@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{6CABA395-F31A-45F6-9D2B-83175A67743F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTestUI", "ConsoleTestUI\ConsoleTestUI.csproj", "{5F8FC0F0-CBA7-4C62-990E-BB2711D5932A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTestUI", "ConsoleTestUI\ConsoleTestUI.csproj", "{5F8FC0F0-CBA7-4C62-990E-BB2711D5932A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{4E63FDB2-7523-49F5-9346-4C338DAC6DAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{4E63FDB2-7523-49F5-9346-4C338DAC6DAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{74170946-3506-4AF1-B5F7-BC49CF6EDB30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{74170946-3506-4AF1-B5F7-BC49CF6EDB30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

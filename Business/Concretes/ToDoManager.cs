@@ -2,6 +2,9 @@
 using DataAccess.Abstracts;
 using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
+using Services.Constants;
+using Services.Result;
+using Services.Result.Abstracts;
 using System.Linq.Expressions;
 
 namespace Business.Concretes
@@ -16,7 +19,7 @@ namespace Business.Concretes
             _taskDetailService = taskDetailService;
         }
 
-        public bool Add(ToDo toDo, int fromId)
+        public IResult Add(ToDo toDo, int fromId)
         {
             if (_toDoDal.Add(toDo))
             {
@@ -30,27 +33,35 @@ namespace Business.Concretes
                 };
                 return _taskDetailService.Add(taskDetail);
             }
-            return false;
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Task,Messages.InsertError));
         }
 
-        public bool Delete(int todoId)
+        public IResult Delete(int todoId)
         {
-            return _toDoDal.Delete(new ToDo { TaskId = todoId });
+            if (_toDoDal.Delete(new ToDo { TaskId = todoId }))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Task, Messages.Deleted));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Task, Messages.DeletionError));
         }
 
-        public List<ToDo> GetToDos()
+        public IDataResult<List<ToDo>> GetToDos()
         {
-            return _toDoDal.GetAll();
+            return new SuccessDataResult<List<ToDo>>(_toDoDal.GetAll());
         }
 
-        public List<ListUserTaskDTO> GetTodosWithUserId(int userId)
+        public IDataResult<List<ListUserTaskDTO>> GetTodosWithUserId(int userId)
         {
-            return _toDoDal.GetTodosWithUserId(userId).Data;
+            return _toDoDal.GetTodosWithUserId(userId);
         }
 
-        public bool Update(ToDo toDo)
+        public IResult Update(ToDo toDo)
         {
-            return _toDoDal.Update(toDo);
+            if (_toDoDal.Update(toDo))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.Task, Messages.Updated));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.Task, Messages.UpdateError));
         }
     }
 }

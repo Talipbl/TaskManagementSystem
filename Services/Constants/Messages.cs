@@ -27,5 +27,7 @@ namespace Services.Constants
         public static string Updated = " {0} güncellendi";
         public static string UpdateError = " {0} güncellenemedi";
         public static string Information;
+        public static string TaskDetail;
+        public static string Task;
     }
 }

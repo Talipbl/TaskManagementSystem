@@ -1,15 +1,16 @@
 ﻿using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
+using Services.Result.Abstracts;
 using System.Linq.Expressions;
 
 namespace Business.Abstracts
 {
     public interface IToDoService
     {
-        bool Add(ToDo toDo, int fromId);
-        bool Update(ToDo toDo);
-        bool Delete(int todoId);
-        List<ToDo> GetToDos();
-        List<ListUserTaskDTO> GetTodosWithUserId(int userId);
+        IResult Add(ToDo toDo, int fromId);
+        IResult Update(ToDo toDo);
+        IResult Delete(int todoId);
+        IDataResult<List<ToDo>> GetToDos();
+        IDataResult<List<ListUserTaskDTO>> GetTodosWithUserId(int userId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Business.Abstracts;
 using Entity.Concretes.DTO;
+using Entity.Concretes.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
@@ -13,7 +14,6 @@ namespace WebAPI.Controllers
     {
         IAuthenticationService _authenticationService;
         IUserService _userService;
-
         public AuthenticationController(IAuthenticationService authenticationService, IUserService userService)
         {
             _authenticationService = authenticationService;
@@ -27,10 +27,15 @@ namespace WebAPI.Controllers
             if (result.Success)
             {
                 var loginUser = _userService.GetUserByMail(userLogin.EMail);
-                var accessToken = _authenticationService.CreateAccessToken(loginUser);
+                var accessToken = _authenticationService.CreateAccessToken(loginUser.Data);
                 if (accessToken != null)
                 {
-                    return Ok(accessToken);
+                    AccessTokenDTO token = new AccessTokenDTO
+                    {
+                        User = loginUser,
+                        AccessToken = accessToken
+                    };
+                    return Ok(token);
                 }
             }
             return Unauthorized(result.Message);

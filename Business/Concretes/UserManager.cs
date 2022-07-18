@@ -2,6 +2,9 @@
 using DataAccess.Abstracts;
 using Entity.Concretes.DTO;
 using Entity.Concretes.Models;
+using Services.Constants;
+using Services.Result;
+using Services.Result.Abstracts;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,40 +14,51 @@ namespace Business.Concretes
     public class UserManager : IUserService
     {
         IUserDal _userDal;
-        IPasswordService _passwordService;
         public UserManager(IUserDal userDal)
         {
             _userDal = userDal;
         }
 
-        public bool Add(User user)
+        public IResult Add(User user)
         {
-            return _userDal.Add(user);
+            if (_userDal.Add(user))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.User, Messages.Added));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.User, Messages.InsertError));
         }
 
-        public bool Delete(int userId)
+        public IResult Delete(int userId)
         {
-            return _userDal.Delete(new User { UserId = userId });
+            if (_userDal.Delete(new User { UserId = userId }))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.User, Messages.Deleted));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.User, Messages.DeletionError));
         }
 
-        public User GetUser(int userId)
+        public IDataResult<User> GetUser(int userId)
         {
-            return _userDal.Get(u => u.UserId == userId);
+            return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
         }
 
-        public User GetUserByMail(string userMailAddress)
+        public IDataResult<User> GetUserByMail(string userMailAddress)
         {
-            return _userDal.Get(u => u.MailAdress == userMailAddress);
+            return new SuccessDataResult<User>(_userDal.Get(u => u.MailAdress == userMailAddress));
         }
 
-        public List<User> GetUsers()
+        public IDataResult<List<User>> GetUsers()
         {
-            return _userDal.GetAll();
+            return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public bool Update(User user)
+        public IResult Update(User user)
         {
-            return _userDal.Update(user);
+            if (_userDal.Update(user))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.User, Messages.Updated));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.User, Messages.UpdateError));
         }
     }
 }

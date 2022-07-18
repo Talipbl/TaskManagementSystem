@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Abstracts
 {
-    internal interface IDto
+    public interface IDto
     {
     }
 }

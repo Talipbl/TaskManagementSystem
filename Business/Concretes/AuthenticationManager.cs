@@ -40,9 +40,9 @@ namespace Business.Concretes
                     MailAdress = userRegister.MailAdress,
                     PhoneNumber = userRegister.PhoneNumber
                 };
-                if (_userService.Add(user))
+                if (_userService.Add(user).Success)
                 {
-                    var userId = _userService.GetUserByMail(userRegister.MailAdress).UserId;
+                    var userId = _userService.GetUserByMail(userRegister.MailAdress).Data.UserId;
                     Password password = new Password()
                     {
                         UserId = userId,
@@ -62,9 +62,9 @@ namespace Business.Concretes
         public IResult Login(UserLoginDTO userLogin)
         {
             var user = _userService.GetUserByMail(userLogin.EMail);
-            if (user != null)
+            if (user.Data != null)
             {
-                var password = _passwordService.GetPassword(user.UserId);
+                var password = _passwordService.GetPassword(user.Data.UserId);
                 return HashingHelper.VerifyPasswordHash(userLogin.Password, password.Data.PasswordHash, password.Data.PasswordSalt);
             }
             return new ErrorResult(MessageHelper.CreateMessage(Messages.UserName,Messages.Incorrect));

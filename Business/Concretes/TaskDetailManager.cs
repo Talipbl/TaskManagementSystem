@@ -1,6 +1,9 @@
 ﻿using Business.Abstracts;
 using DataAccess.Abstracts;
 using Entity.Concretes.Models;
+using Services.Constants;
+using Services.Result;
+using Services.Result.Abstracts;
 
 namespace Business.Concretes
 {
@@ -11,25 +14,38 @@ namespace Business.Concretes
         {
             _taskDetailDal = taskDetailDal;
         }
-    
-        public bool Add(TaskDetail taskDetail)
+
+        public IResult Add(TaskDetail taskDetail)
         {
-            return _taskDetailDal.Add(taskDetail);
+            if (_taskDetailDal.Add(taskDetail))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.TaskDetail, Messages.Added));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.TaskDetail, Messages.InsertError));
         }
 
-        public bool Delete(int taskId)
+        public IResult Delete(int taskId)
         {
-            return _taskDetailDal.Delete(new TaskDetail { TaskId = taskId });
+            if (_taskDetailDal.Delete(new TaskDetail { TaskId = taskId }))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.TaskDetail, Messages.Deleted));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.TaskDetail, Messages.DeletionError));
         }
 
-        public TaskDetail GetTaskDetail(int taskId)
+        public IDataResult<TaskDetail> GetTaskDetail(int taskId)
         {
-            return _taskDetailDal.Get(t => t.TaskId == taskId);
+            return new SuccessDataResult<TaskDetail>(_taskDetailDal.Get(t => t.TaskId == taskId));
         }
 
-        public bool Update(TaskDetail taskDetail)
+        public IResult Update(TaskDetail taskDetail)
         {
-            return _taskDetailDal.Update(taskDetail);
+            if (_taskDetailDal.Update(taskDetail))
+            {
+                return new SuccessResult(MessageHelper.CreateMessage(Messages.TaskDetail, Messages.Updated));
+            }
+            return new ErrorResult(MessageHelper.CreateMessage(Messages.TaskDetail, Messages.UpdateError));
+
         }
     }
 }
