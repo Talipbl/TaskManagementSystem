@@ -37,6 +37,7 @@ options.TokenValidationParameters = new TokenValidationParameters()
 });
 
 var app = builder.Build();
+app.UseCors(builder => builder.WithOrigins("https://localhost:7157").AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
